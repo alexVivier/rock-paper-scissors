@@ -1,0 +1,18 @@
+{
+  "rootDir": "../..",
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/$1"
+  },
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "collectCoverageFrom": ["./api/**/*.service.ts"],
+  "coveragePathIgnorePatterns": [
+  ],
+  "testEnvironment": "node"
+}
