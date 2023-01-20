@@ -7,9 +7,7 @@ import { CreateGameDto } from "./dto/create-game.dto";
 @Injectable()
 export class GameService {
 
-  constructor(@InjectModel(Game.name) private gameModel: Model<GameDocument>) {
-
-  }
+  constructor(@InjectModel(Game.name) private gameModel: Model<Game>) {}
 
   createGame(body: CreateGameDto) {
     const createdGame = new this.gameModel(body);
