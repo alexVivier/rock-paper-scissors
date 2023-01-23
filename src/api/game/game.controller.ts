@@ -10,7 +10,7 @@ export class GameController {
   constructor(private readonly service: GameService) {
   }
 
-  @Post('create')
+  @Post()
   createGame(@Body() body: CreateGameDto) {
     try {
       return this.service.createGame(body);

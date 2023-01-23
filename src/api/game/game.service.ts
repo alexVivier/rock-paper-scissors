@@ -39,6 +39,11 @@ export class GameService {
       round.winner = "computer";
     }
 
+    // Else if it's a draw winner = null
+    else {
+      round.winner = null;
+    }
+
     // Add played round to game history
     game.rounds.push(round);
 

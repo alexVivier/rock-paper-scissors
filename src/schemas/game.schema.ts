@@ -9,16 +9,16 @@ export class Game {
   @Prop({ required: true })
   maxRoundToWin: number;
 
-  @Prop()
+  @Prop({default: 0})
   playerScore: number;
 
-  @Prop()
+  @Prop({default: 0})
   computerScore: number;
 
   @Prop()
   rounds: any[];
 
-  @Prop()
+  @Prop({default: 'started' })
   status: string;
 }
 
