@@ -48,7 +48,7 @@ export class GameService {
     }
 
     // Update and return game
-    game.update();
+    await game.save();
     return game;
   }
 
@@ -76,5 +76,14 @@ export class GameService {
   isGameOver({maxRoundToWin, playerScore, computerScore}) {
     // Check if computer or player has reached the number of wins needed to finish game
     return computerScore >= maxRoundToWin || playerScore >= maxRoundToWin;
+  }
+
+  getComputerChoice() {
+    // Array with all possible choices
+    const choices = ["rock", "paper", "scissors"];
+    // Generate random int between 0 and the lenght of choices array
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    // Return corresponding choice
+    return choices[randomIndex];
   }
 }

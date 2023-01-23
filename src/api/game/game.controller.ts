@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { GameService } from "./game.service";
 import { CreateGameDto } from "./dto/create-game.dto";
 import { AddRoundGameDto } from "./dto/add-round-game.dto";
+import { GameStatusGuard } from "../../guards/game-status.guard";
 
 @Controller('game')
 export class GameController {
@@ -18,6 +19,15 @@ export class GameController {
     }
   }
 
+  @Get('computer-choice')
+  getComputerChoice() {
+    try {
+      return this.service.getComputerChoice();
+    } catch(err) {
+      throw err
+    }
+  }
+
   @Get(':id')
   getById(@Param('id') _id: string) {
     try {
@@ -27,6 +37,7 @@ export class GameController {
     }
   }
 
+  @UseGuards(GameStatusGuard)
   @Post(':id/round-finished')
   addPlayedRound(@Param('id') _id: string, @Body() body: AddRoundGameDto) {
     try {
