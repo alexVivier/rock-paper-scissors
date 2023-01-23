@@ -16,7 +16,10 @@ export class Game {
   computerScore: number;
 
   @Prop()
-  rounds: [];
+  rounds: any[];
+
+  @Prop()
+  status: string;
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);
