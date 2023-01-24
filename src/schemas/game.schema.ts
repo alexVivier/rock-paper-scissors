@@ -20,6 +20,9 @@ export class Game {
 
   @Prop({default: 'started' })
   status: string;
+
+  @Prop({default: null })
+  winner: string;
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);

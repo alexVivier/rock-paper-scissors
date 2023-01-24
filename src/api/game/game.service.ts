@@ -25,7 +25,7 @@ export class GameService {
     const game = await this.gameModel.findById(_id);
 
     // Check who wins this round
-    const result = this.checkWinner(round);
+    const result = this.checkRoundWinner(round);
 
     // If player wins increment score
     if (result === 1) {
@@ -50,6 +50,7 @@ export class GameService {
     // Check if game is over, if yes, set game status tu finished
     if (this.isGameOver(game)) {
       game.status = 'finished';
+      game.winner = this.checkWinner(game);
     }
 
     // Update and return game
@@ -57,7 +58,11 @@ export class GameService {
     return game;
   }
 
-  checkWinner({ computerChoice, playerChoice }) {
+  checkWinner(game) {
+    return game.playerScore > game.computerScore ? 'player' : 'computer'
+  }
+
+  checkRoundWinner({ computerChoice, playerChoice }) {
     // Tableau des règles de jeu
     const gameRules = {
       "rock": "scissors",
