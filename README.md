@@ -35,3 +35,24 @@ npm run start
 The client is a CLI published on npm.
 
 Please follow the package docs on this [link](https://www.npmjs.com/package/rock-paper-scissors-client) to install and play rock-paper-scissors.
+
+### Tests
+
+This API is tested using jest.
+
+To run unit tests :
+````
+npm run test:unit
+````
+To see the coverage of unit tests :
+````
+npm run test:unit:cov
+````
+To run end to end tests :
+````
+npm run test:e2e
+````
+To see the coverage of the end to end tests :
+````
+npm run test:e2e:cov
+````
