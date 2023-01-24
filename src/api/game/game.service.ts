@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Game, GameDocument } from "../../schemas/game.schema";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { CreateGameDto } from "./dto/create-game.dto";
+import * as HTTP from "http";
 
 @Injectable()
 export class GameService {
@@ -10,9 +11,11 @@ export class GameService {
   constructor(@InjectModel(Game.name) private gameModel: Model<Game>) {
   }
 
+  // Game init
   createGame(body: CreateGameDto) {
-    body.playerScore = 0;
-    body.computerScore = 0;
+    if (body.maxRoundToWin <= 0) {
+      throw new HttpException('Cannot create game with negative maxRoundToWin', HttpStatus.BAD_REQUEST)
+    }
     return this.gameModel.create(body);
   }
 
@@ -54,7 +57,7 @@ export class GameService {
     }
 
     // Update and return game
-    await game.save();
+    await this.gameModel.bulkSave([game]);
     return game;
   }
 

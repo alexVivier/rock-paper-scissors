@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# jest coverage
+src/coverage/
+
 # Logs
 logs
 *.log

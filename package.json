@@ -8,19 +8,19 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \\\"src/**/*.ts\\\" \\\"src/test/**/*.ts\\\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
-    "test:unit": "jest --config ./test/unit/jest-unit.json --verbose=true",
-    "test:unit:watch": "jest --config ./test/unit/jest-unit.json --verbose=true --watch",
-    "test:unit:cov": "jest --config ./test/unit/jest-unit.json --coverage",
+    "test:unit": "jest --config src/test/unit/jest-unit.json --verbose=true",
+    "test:unit:watch": "jest --config src/test/unit/jest-unit.json --verbose=true --watch",
+    "test:unit:cov": "jest --config src/test/unit/jest-unit.json --coverage",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config src/test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
