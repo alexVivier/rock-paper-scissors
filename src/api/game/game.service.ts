@@ -14,7 +14,7 @@ export class GameService {
   // Game init
   createGame(body: CreateGameDto) {
     if (body.maxRoundToWin <= 0) {
-      throw new HttpException('Cannot create game with negative maxRoundToWin', HttpStatus.BAD_REQUEST)
+      throw new HttpException("Cannot create game with negative maxRoundToWin", HttpStatus.BAD_REQUEST);
     }
     return this.gameModel.create(body);
   }
@@ -52,7 +52,7 @@ export class GameService {
 
     // Check if game is over, if yes, set game status tu finished
     if (this.isGameOver(game)) {
-      game.status = 'finished';
+      game.status = "finished";
       game.winner = this.checkWinner(game);
     }
 
@@ -62,7 +62,7 @@ export class GameService {
   }
 
   checkWinner(game) {
-    return game.playerScore > game.computerScore ? 'player' : 'computer'
+    return game.playerScore > game.computerScore ? "player" : "computer";
   }
 
   checkRoundWinner({ computerChoice, playerChoice }) {
@@ -86,7 +86,7 @@ export class GameService {
     }
   }
 
-  isGameOver({maxRoundToWin, playerScore, computerScore}) {
+  isGameOver({ maxRoundToWin, playerScore, computerScore }) {
     // Check if computer or player has reached the number of wins needed to finish game
     return computerScore >= maxRoundToWin || playerScore >= maxRoundToWin;
   }

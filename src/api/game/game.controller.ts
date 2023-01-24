@@ -30,11 +30,7 @@ export class GameController {
 
   @Get(':id')
   getById(@Param('id') _id: string) {
-    try {
       return this.service.getGame(_id);
-    } catch(err) {
-      throw err;
-    }
   }
 
   @UseGuards(GameStatusGuard)
