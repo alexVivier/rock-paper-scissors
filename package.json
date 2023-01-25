@@ -26,8 +26,10 @@
   "dependencies": {
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/jwt": "^10.0.1",
     "@nestjs/mongoose": "^9.2.1",
     "@nestjs/platform-express": "^8.0.0",
+    "argon2": "^0.30.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "mockingoose": "^2.16.2",

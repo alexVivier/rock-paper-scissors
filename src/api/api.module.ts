@@ -1,12 +1,15 @@
 import {Module} from "@nestjs/common";
 import { GameModule } from "./game/game.module";
+import { UserModule } from "./user/user.module";
 
 @Module({
     exports: [
-      GameModule
+      GameModule,
+      UserModule,
     ],
     imports: [
-      GameModule
+      GameModule,
+      UserModule,
     ],
     providers: [],
     controllers: []

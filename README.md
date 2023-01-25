@@ -56,3 +56,18 @@ To see the coverage of the end to end tests :
 ````
 npm run test:e2e:cov
 ````
+
+### Coming features
+
+#### Auth
+
+I want to add auth feature to let user save and get their previous games
+
+It's mandatory for the leaderboard feature.
+
+#### Leaderboard
+
+The leaderboard aims to show best players. It will have differents leaderboards :
+ - Longest games
+ - Players with most games
+ - Computer best victims
