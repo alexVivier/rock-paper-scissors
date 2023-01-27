@@ -11,7 +11,7 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "collectCoverageFrom": ["./api/**/*.service.ts"],
+  "collectCoverageFrom": ["./api/**/*.service.ts", "./auth/**/*.service.ts"],
   "coveragePathIgnorePatterns": [
   ],
   "testEnvironment": "node"

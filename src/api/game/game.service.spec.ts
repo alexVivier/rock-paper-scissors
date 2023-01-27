@@ -1,12 +1,11 @@
 import { GameService } from "./game.service";
 import { Test, TestingModule } from "@nestjs/testing";
 import { getModelToken } from "@nestjs/mongoose";
-import { Game, GameDocument, GameSchema } from "../../schemas/game.schema";
+import { Game, GameDocument } from "../../schemas/game.schema";
 import { element, mockRepository, setElement } from "../../common/test/mock-repository";
 import { CreateGameDto } from "./dto/create-game.dto";
-import mock = jest.mock;
 import { Model } from "mongoose";
-import { BadRequestException, HttpException, HttpStatus } from "@nestjs/common";
+import { HttpException, HttpStatus } from "@nestjs/common";
 
 
 describe("GameService", () => {
@@ -43,7 +42,6 @@ describe("GameService", () => {
   });
 
   setElement(mockGame(2))
-
 
   /**
    * Before each describe we initialize Game module to get mocked service

@@ -9,4 +9,8 @@ export class SignupAuthDto {
   @IsDefined()
   @IsString()
   password: string;
+
+  @IsDefined()
+  @IsString()
+  pseudo: string;
 }
