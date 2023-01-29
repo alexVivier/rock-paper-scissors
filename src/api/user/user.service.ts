@@ -16,7 +16,7 @@ export class UserService {
         return await this.userModel.create(body);
     }
 
-    find(filter) {
+    findOne(filter) {
         return this.userModel.findOne(filter)
     }
 

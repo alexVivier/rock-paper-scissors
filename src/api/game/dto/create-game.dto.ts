@@ -1,4 +1,4 @@
-import { IsDefined, IsNumber } from "class-validator";
+import { IsDefined, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateGameDto {
 
@@ -6,6 +6,7 @@ export class CreateGameDto {
   @IsNumber()
   maxRoundToWin: number;
 
-  playerScore?: number;
-  computerScore?: number;
+  @IsOptional()
+  @IsString()
+  playerId?: string;
 }

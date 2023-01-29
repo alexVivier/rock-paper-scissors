@@ -19,19 +19,23 @@ export class AuthService {
   }
 
   async login(body) {
-    const user = await this.userService.find({
+    const user = await this.userService.findOne({
       email: body.email
     });
+    if (!user) {
+      throw new HttpException("Error while login.", HttpStatus.BAD_REQUEST);
+    }
     const isPasswordOk = argon2.verify(user.password, body.password);
     if (!isPasswordOk) {
-      throw new HttpException("Wrong email or password.", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Error while login.", HttpStatus.BAD_REQUEST);
     }
     return this.signToken(user);
   }
 
   signToken(user) {
     const payload = {
-      id: user._id
+      id: user._id,
+      pseudo: user.pseudo
     };
     return this.jwtService.sign(payload);
   }

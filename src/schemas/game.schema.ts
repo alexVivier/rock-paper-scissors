@@ -23,6 +23,9 @@ export class Game {
 
   @Prop({default: null })
   winner: string;
+
+  @Prop({default: null})
+  playerId?: string;
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);
