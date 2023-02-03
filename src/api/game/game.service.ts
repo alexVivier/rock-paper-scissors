@@ -25,9 +25,6 @@ export class GameService {
     return this.gameModel.findById(_id);
   }
 
-  findByFilter(filter) {
-    return this.gameModel.find(filter);
-  }
 
   async addPlayedRound(_id: string, round) {
     // Find the game to update

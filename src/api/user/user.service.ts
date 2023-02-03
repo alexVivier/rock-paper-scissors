@@ -20,6 +20,10 @@ export class UserService {
         return this.userModel.findOne(filter)
     }
 
+    findAndSortBy(sort: string, limit: number) {
+        return this.userModel.find().sort(sort).limit(limit)
+    }
+
     async addWin(userId) {
         const user = await this.userModel.findOne({_id: userId});
         const userUpdated = await this.userModel.updateOne({_id: user._id}, {

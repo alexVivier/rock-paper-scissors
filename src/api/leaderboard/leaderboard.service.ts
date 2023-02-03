@@ -1,16 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { GameService } from "../game/game.service";
 import { leaderboardStrategies } from "./leaderboard.strategies";
+import { UserService } from "../user/user.service";
 
 @Injectable()
 export class LeaderboardService {
 
   constructor(
-    private readonly gameService: GameService,
+    private readonly userService: UserService,
   ) {
   }
 
-  getLeaderboard(strategy, data) {
-    return this.gameService.findByFilter(leaderboardStrategies[strategy](data))
+  getLeaderboard(strategy) {
+    return this.userService.findAndSortBy(leaderboardStrategies[strategy](), 20)
   }
 }

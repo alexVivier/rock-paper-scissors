@@ -5,16 +5,14 @@ export const leaderboardStrategies = {
   2: mostGames,
 }
 
-function mostWins(data) {
-  return {
-
-  }
+function mostWins() {
+  return '-winCounter'
 }
 
-function fewestWins(data) {
-
+function fewestWins() {
+  return '-lossCounter'
 }
 
-function mostGames(data) {
-
+function mostGames() {
+  return '-playedGames'
 }
