@@ -4,11 +4,13 @@ import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { CreateGameDto } from "./dto/create-game.dto";
 import * as HTTP from "http";
+import { UserService } from "../user/user.service";
 
 @Injectable()
 export class GameService {
 
-  constructor(@InjectModel(Game.name) private gameModel: Model<Game>) {
+  constructor(@InjectModel(Game.name) private gameModel: Model<Game>,
+              private readonly userService: UserService) {
   }
 
   // Game init
@@ -21,6 +23,10 @@ export class GameService {
 
   getGame(_id: string) {
     return this.gameModel.findById(_id);
+  }
+
+  findByFilter(filter) {
+    return this.gameModel.find(filter);
   }
 
   async addPlayedRound(_id: string, round) {
@@ -54,6 +60,8 @@ export class GameService {
     if (this.isGameOver(game)) {
       game.status = "finished";
       game.winner = this.checkWinner(game);
+      // Update user stats if logged in
+      if (game.playerId) { await this.setUserStats(game) }
     }
 
     // Update and return game
@@ -98,5 +106,16 @@ export class GameService {
     const randomIndex = Math.floor(Math.random() * choices.length);
     // Return corresponding choice
     return choices[randomIndex];
+  }
+
+  async setUserStats(game) {
+    // If player won, add played game and a win
+    if (game.winner === "player") {
+      await this.userService.addWin(game.playerId);
+    }
+    // Else player lost, add played game and a loss
+    else {
+      await this.userService.addLose(game.playerId);
+    }
   }
 }

@@ -14,6 +14,15 @@ export class User {
 
   @Prop()
   pseudo: string;
+
+  @Prop({default: 0})
+  winCounter: number;
+
+  @Prop({default: 0})
+  playedGames: number;
+
+  @Prop({default: 0})
+  lossCounter: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

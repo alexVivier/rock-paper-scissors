@@ -20,4 +20,22 @@ export class UserService {
         return this.userModel.findOne(filter)
     }
 
+    async addWin(userId) {
+        const user = await this.userModel.findOne({_id: userId});
+        const userUpdated = await this.userModel.updateOne({_id: user._id}, {
+            winCounter: user.winCounter+1,
+            playedGames: user.playedGames+1,
+        })
+        return !!userUpdated;
+    }
+
+    async addLose(userId) {
+        const user = await this.userModel.findOne({_id: userId});
+        const userUpdated = await this.userModel.updateOne({_id: user._id}, {
+            lossCounter: user.lossCounter+1,
+            playedGames: user.playedGames+1,
+        })
+        return !!userUpdated;
+    }
+
 }
