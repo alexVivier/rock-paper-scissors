@@ -114,5 +114,6 @@ export class GameService {
     else {
       await this.userService.addLose(game.playerId);
     }
+    return true;
   }
 }

@@ -1,10 +1,11 @@
 import { Model } from "mongoose";
 import { User, UserDocument } from "../../schemas/user.schema";
 import { UserService } from "./user.service";
-import { mockRepository, setElement } from "../../common/test/mock-repository";
+import { mockRepository, setElement, setElements } from "../../common/test/mock-repository";
 import { Test, TestingModule } from "@nestjs/testing";
 import { getModelToken } from "@nestjs/mongoose";
 import { SignupAuthDto } from "../../auth/dto/signup-auth.dto";
+import mock = jest.mock;
 const argon2 = require("argon2");
 
 
@@ -30,10 +31,16 @@ describe("UserService", () => {
     email = "email",
     password = "password",
     pseudo = "pseudo",
+    winCounter = 0,
+    lossCounter = 0,
+    playedGames = 0,
   ): User => ({
     email,
     password,
-    pseudo
+    pseudo,
+    winCounter,
+    lossCounter,
+    playedGames
   });
 
   const user = mockUser()
@@ -76,13 +83,33 @@ describe("UserService", () => {
   })
 
   describe('findOne function', () => {
-    it('should return filtered user array', async () => {
+    it('should return filtered user', async () => {
       const filter = {
         pseudo: "pseudo"
       }
       const res = await service.findOne(filter);
       expect(res).toBe(user);
       expect(mockU.findOne).toBeCalledWith(filter);
+    })
+  })
+
+  describe('addWin function', () => {
+    it('should return user updated', async () => {
+      const res = await service.addWin("id");
+      expect(mockU.findOne).toBeCalledWith({
+        _id: "id"
+      });
+      expect(mockU.updateOne).toBeCalled();
+      expect(res).toBeDefined();
+    })
+  })
+
+  describe('addLose function', () => {
+    it('should return user updated', async () => {
+      const res = await service.addLose("id");
+      expect(mockU.findOne).toBeCalledWith({ _id: "id" });
+      expect(mockU.updateOne).toBeCalled();
+      expect(res).toBeDefined();
     })
   })
 })

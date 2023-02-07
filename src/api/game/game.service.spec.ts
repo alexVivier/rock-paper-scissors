@@ -6,6 +6,7 @@ import { element, mockRepository, setElement } from "../../common/test/mock-repo
 import { CreateGameDto } from "./dto/create-game.dto";
 import { Model } from "mongoose";
 import { HttpException, HttpStatus } from "@nestjs/common";
+import { UserService } from "../user/user.service";
 
 
 describe("GameService", () => {
@@ -15,6 +16,11 @@ describe("GameService", () => {
    */
   let service: GameService;
   let mockG: Model<GameDocument>;
+
+  let mockUserService = {
+    addWin: jest.fn(async () => true),
+    addLose: jest.fn(async () => true),
+  }
 
   /**
    * Fake data initialization
@@ -32,13 +38,15 @@ describe("GameService", () => {
     playerScore = 0,
     computerScore = 0,
     status = 'started',
+    playerId = null,
   ): Game => ({
     status,
     winner: null,
     maxRoundToWin,
     playerScore,
     computerScore,
-    rounds: []
+    rounds: [],
+    playerId: playerId,
   });
 
   setElement(mockGame(2))
@@ -51,6 +59,10 @@ describe("GameService", () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        {
+          provide: UserService,
+          useValue: mockUserService,
+        },
         {
           provide: getModelToken(Game.name),
           useValue: mockRepository(mockGame)
@@ -154,6 +166,24 @@ describe("GameService", () => {
     })
   })
 
+  describe('setUserStats function', () => {
+
+    let game = mockGame(2);
+    game.playerId = "playerId";
+
+    it('should update stats with player as winner', async () => {
+      game.winner = 'player';
+      await service.setUserStats(game);
+      expect(mockUserService.addWin).toBeCalledWith(game.playerId);
+    })
+
+    it('should update stats with player as loser', async () => {
+      game.winner = 'computer';
+      await service.setUserStats(game);
+      expect(mockUserService.addLose).toBeCalledWith(game.playerId);
+    })
+  })
+
   describe("addPlayedRound function", () => {
 
     it('should play game round and player wins', async () => {
@@ -185,7 +215,6 @@ describe("GameService", () => {
       });
       expect(mockG.bulkSave).toBeCalledWith([element])
       expect(mockG.findById).toBeCalledWith('id')
-      expect(mockG.findById).toBeCalledWith("id");
     })
 
     it('should set status to finished', async () => {
@@ -198,5 +227,21 @@ describe("GameService", () => {
       expect(mockG.findById).toBeCalledWith('id')
       expect(res.status).toBe('finished');
     })
-  })
+
+    it('should call setUserStats function', async () => {
+      const currGame = mockGame(2, 2, 1, 'started', 'playerId')
+      setElement(currGame);
+      service.setUserStats = jest.fn();
+      const res = await service.addPlayedRound("id", {
+        computerChoice: "scissors",
+        playerChoice: "rock"
+      });
+      expect(mockG.bulkSave).toBeCalledWith([element])
+      expect(mockG.findById).toBeCalledWith('id')
+      expect(res.status).toBe('finished');
+      expect(service.setUserStats).toBeCalledWith(currGame);
+    })
+  });
+
+
 });
